@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap-4.3.1.min.css">
+    <link rel="stylesheet" href="./assets/stylesheets/home.css?v=8">
+
+    <title>Elasticsearch Calculator</title>
+  </head>
+  <body>
+    <a href="https://github.com/naviat/elastic-calculator"><img width="149" height="149" src="./assets/images/fork-me.png" class="fork-me" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+
+    <div id="app">
+      <div class="container-fluid">
+        <br>
+        <div class="row">
+          <div class="col-12 col-sm-4 col-md-3 col-lg-2">
+            <div class="card card-form">
+              <div class="card-header">
+                Info:
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="nodes">Total of Nodes:</label>
+                  <input v-model="nodes" type="number" class="form-control" id="nodes">
+                </div>
+
+                <div class="form-group">
+                  <label for="deticatedNodes">Master Nodes:</label>
+                  <input v-model="deticatedNodes" type="number" class="form-control" id="deticatedNodes">
+                </div>
+
+                <div class="form-group">
+                  <label for="shards">Shards:</label>
+                  <input v-model="shards" type="number" class="form-control" id="shards">
+                </div>
+
+                <div class="form-group">
+                  <label for="replicas">Replicas:</label>
+                  <input v-model="replicas" type="number" class="form-control" id="replicas">
+                </div>
+
+                <div class="form-group">
+                  <label for="gbSize">Size ({{ formattedSize }}):</label>
+                  <input v-model="gbSize" type="number" class="form-control" id="gbSize">
+                </div>
+
+                <div class="form-group">
+                  <label for="documents">Documents ({{ formattedDocuments }}):</label>
+                  <input v-model="documents" type="number" class="form-control" id="documents">
+                </div>
+
+                <div class="form-group">
+                  <label for="writeThroughput">Write ({{formattedWriteThroughput}} rpm):</label>
+                  <input v-model="writeThroughput" type="number" class="form-control" id="writeThroughput">
+                </div>
+
+                <div class="form-group">
+                  <label for="readThroughput">Read ({{ formattedReadThroughput }} rpm):</label>
+                  <input v-model="readThroughput" type="number" class="form-control" id="readThroughput">
+                </div>
+
+                <div class="form-group">
+                  <label for="clusters">Clusters:</label>
+                  <input v-model="clusters" type="number" class="form-control" readonly="readonly" id="clusters">
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <!-- ========================================================== -->
+          <div class="col-12 col-sm-8 col-md-9 col-lg-10 clusters">
+            <div class="row">
+              <cluster
+                v-for="clusterIndex in safeInt(clusters)"
+                :key="'cluster' + clusterIndex"
+                :name="'cluster ' + clusterIndex"
+                :clusters="safeInt(clusters)"
+                :nodes="safeInt(nodes)"
+                :deticated-nodes="safeInt(deticatedNodes)"
+                :documents="safeInt(documents)"
+                :shards="safeInt(shards)"
+                :read-throughput="safeInt(readThroughput)"
+                :gb-size="safeInt(gbSize)"
+                :write-throughput="safeInt(writeThroughput)"
+                :replicas="safeInt(replicas)">
+              </cluster>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+
+    <script src="./bundle/javascripts/home.js?v=8"></script>
+  </body>
+</html>
